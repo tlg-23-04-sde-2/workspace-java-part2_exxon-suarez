@@ -1,5 +1,7 @@
 package com.entertainment;
 
+import java.util.Objects;
+
 public class Television {
 
     private String brand;
@@ -48,10 +50,31 @@ public class Television {
     }
 
 
-    public String toString() {
-        return getClass().getSimpleName() + " [brand=" + getBrand() +
-                ", volume=" + getVolume() + ", currentChannel=" + getCurrentChannel() + "]";
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if(obj instanceof Television) {
+            Television  other = (Television) obj;
+
+            result = Objects.equals(this.getBrand(), other.getBrand()) &&  // null safe check
+                    this.getVolume() == other.getVolume();
+        }
+        return result;
     }
+
+    @Override
+    public int hashCode() {
+//        return getBrand().length() + getVolume();
+        // delegate to Objects.hash(), which uses a "good" hash function to minamize collisions
+        return Objects.hash(getBrand(), getVolume());
+
+    }
+
+
+
+    public String toString() {
+        return String.format("%s: brand:%s, volume=%s, currentChannel=%s", getClass().getSimpleName(), getBrand(), getVolume(), getCurrentChannel());
+    }
+
 
 
 }
