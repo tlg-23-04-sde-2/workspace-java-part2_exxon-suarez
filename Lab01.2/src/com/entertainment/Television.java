@@ -2,7 +2,13 @@ package com.entertainment;
 
 import java.util.Objects;
 
-public class Television {
+
+/*
+ * natural order is defined by brand (String).
+ *  **** be consistent with equals, natural order must use the same properties that are used in equals(). ****
+ */
+
+public class Television implements Comparable<Television> {
 
     private String brand;
     private int volume;
@@ -49,6 +55,18 @@ public class Television {
         this.volume = volume;
     }
 
+    // natural order is defined by brand(String) then by volume(int)
+    // to be consistent with equals we must use the same properties for natural order that we use for equals() and hashCode()
+    public int compareTo(Television other) {
+        int result = this.getBrand().compareTo(other.getBrand());
+
+        if( result == 0 ) {      // tied on brand, break the tie by volume
+            result = Integer.compare(this.getVolume(), other.getVolume());
+        }
+
+        return result;
+    }
+
 
     public boolean equals(Object obj) {
         boolean result = false;
@@ -60,6 +78,9 @@ public class Television {
         }
         return result;
     }
+
+
+
 
     @Override
     public int hashCode() {
