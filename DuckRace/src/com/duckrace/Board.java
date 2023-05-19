@@ -3,10 +3,7 @@ package com.duckrace;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /*
  * This is a lookup table of ids to student names.
@@ -45,6 +42,24 @@ class Board {
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
 
+    /*
+     * Updates the board (racerMap) by making a duck racer win
+     * this could mean fetching an existing racer from racer map or we might need to create a new duck racer and put it in the map
+     * either way we need to make it win
+     */
+
+    public void update(int id, Reward reward) {
+        DuckRacer racer = null;              // declare it here so its visible in and outside the for loop
+        if(racerMap.containsKey(id)) {      //if the id exists in raceMap
+            racer = racerMap.get(id);
+        } else {
+            racer = new DuckRacer(id, studentIdMap.get(id));
+            racerMap.put(id,racer);
+            racer.win(reward);
+        }
+        racer.win(reward);
+    }
+
     //FOR TESTING PURPOSES
     void dumpStudentIdMap() {
         System.out.println(studentIdMap);
@@ -70,4 +85,14 @@ class Board {
         return idMap;
     }
 
+    public void show() {
+        Collection<DuckRacer> racers = racerMap.values();
+        System.out.println("Duck Race Results");
+        System.out.println("============\n");
+        System.out.println("id  name wins rewards");
+        System.out.println(" -- ---- ---- -------");
+        for(DuckRacer racer : racers) {
+            System.out.printf("%s %s %s %s \n",racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());  // toString automatically called
+        }
+    }
 }

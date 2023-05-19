@@ -60,6 +60,6 @@ class DuckRacer {
 
     @Override
     public String toString() {
-        return String.format("%s, name=%s, wins=%s, rewards=%s, rewards=%s", getClass().getSimpleName(), getId(), getName(),getWins(), getRewards());
+        return String.format("%s: id=%s, name=%s, wins=%s, rewards=%s", getClass().getSimpleName(),getId(),getName(),getWins(),getRewards());
     }
 }
