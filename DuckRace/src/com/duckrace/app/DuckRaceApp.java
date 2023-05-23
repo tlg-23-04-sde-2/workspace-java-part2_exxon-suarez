@@ -3,7 +3,7 @@ package com.duckrace.app;
 
 /*
  * Application CONTROLLER
- * Sets up system classes, orchastrates overal flow of the application
+ * Sets up system objects, orchastrates overal flow of the application
  * Prompts user for inputs and forwards thos einputs to the system ( backend)
  */
 
@@ -16,8 +16,9 @@ import java.util.Scanner;
 
 public class DuckRaceApp {
     private final Scanner scanner = new Scanner(System.in);     // read inputs from console
-    private Board board = new Board();
-    private int totalRacers = board.getRacersSize();
+    private final Board board = Board.getInstance();
+    private final int totalRacers = board.getRacersSize();
+
 
     public void execute() {
         welcome();
